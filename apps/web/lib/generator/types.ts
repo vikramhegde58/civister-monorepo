@@ -13,7 +13,8 @@ export type RoomType =
   | "staircase"
   | "foyer"
   | "balcony" // Added
-  | "sitout"; // Added
+  | "sitout" // Added
+  | "passage"; // Added for internal corridors
 
 export type WallSide = "top" | "bottom" | "left" | "right";
 

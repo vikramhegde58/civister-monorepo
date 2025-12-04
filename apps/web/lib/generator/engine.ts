@@ -16,9 +16,6 @@ const COLORS: Record<RoomType, string> = {
   passage: "#FDFBF7" // Added passage color
 };
 
-// Extended RoomType for internal logic
-type ExtendedRoomType = RoomType | "passage";
-
 export class FloorPlanGenerator {
   private config: GeneratorConfig;
   private plan: FloorPlan;

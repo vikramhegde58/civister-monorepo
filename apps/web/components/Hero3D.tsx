@@ -181,18 +181,29 @@ function FloatingParticles() {
 useGLTF.preload("/modern_dining_room.glb");
 
 export default function Hero3D() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <div className="w-full h-full absolute inset-0 pointer-events-auto">
       <Canvas 
-          shadows 
-          dpr={[1, 1]} 
+          shadows={!isMobile} 
+          dpr={isMobile ? [0.75, 1] : [1, 1.5]} 
           gl={{ 
-              antialias: true, 
+              antialias: !isMobile, 
               alpha: true, 
               toneMapping: THREE.ACESFilmicToneMapping,
-              powerPreference: "high-performance"
+              powerPreference: isMobile ? "low-power" : "high-performance"
           }} 
-          camera={{ position: [12, 6, 15], fov: 25 }}
+          camera={{ position: [12, 6, 15], fov: isMobile ? 30 : 25 }}
           style={{ pointerEvents: 'auto' }}
       >
         <Suspense fallback={<Html center><div className="text-white/50 text-sm font-mono">Loading 3D Experience...</div></Html>}>
@@ -219,17 +230,17 @@ export default function Hero3D() {
                 <GlbModel scale={1} /> 
             </Float>
 
-            <FloatingParticles />
+            {!isMobile && <FloatingParticles />}
             
-            <Environment preset="city" blur={1} environmentIntensity={0.5} />
+            <Environment preset="city" blur={isMobile ? 0.5 : 1} environmentIntensity={isMobile ? 0.3 : 0.5} />
         </Suspense>
         
         {/* Controls - Outside Suspense so they work immediately */}
         <OrbitControls 
-            enableZoom={false} 
+            enableZoom={!isMobile} 
             enablePan={false} 
             autoRotate 
-            autoRotateSpeed={0.5}
+            autoRotateSpeed={isMobile ? 0.3 : 0.5}
             minPolarAngle={Math.PI / 3}
             maxPolarAngle={Math.PI / 2}
             minDistance={8}

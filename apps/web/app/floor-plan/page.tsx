@@ -24,7 +24,7 @@ const TabsListImpl = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      "inline-flex h-12 items-center justify-center rounded-none border border-white/10 bg-white/5 p-1 text-muted-foreground backdrop-blur-sm",
+      "inline-flex h-12 items-center justify-center rounded-none border border-gray-200 bg-gray-50 p-1 text-muted-foreground backdrop-blur-sm",
       className
     )}
     {...props}
@@ -39,7 +39,7 @@ const TabsTriggerImpl = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      "inline-flex items-center justify-center whitespace-nowrap px-6 py-2.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-sm hover:text-white",
+      "inline-flex items-center justify-center whitespace-nowrap px-6 py-2.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-sm hover:text-foreground",
       className
     )}
     {...props}
@@ -92,11 +92,11 @@ export default function FloorPlanPage() {
 
   if (!activePlan && !generatedPlan) {
       return (
-          <div className="min-h-screen flex flex-col items-center justify-center bg-background text-white p-6">
+          <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground p-6">
               <h1 className="text-3xl font-bold mb-4 tracking-tight">No plan generated yet.</h1>
-              <Link href="/questionnaire">
+              <Link href="/tools/floor-plan-generator">
                 <Button className="h-14 px-8 bg-primary hover:bg-primary/90 text-lg">
-                    Start Questionnaire
+                    Start Floor Plan Generator
                 </Button>
               </Link>
           </div>
@@ -114,13 +114,13 @@ export default function FloorPlanPage() {
 
       <div className="container max-w-7xl relative z-10 mx-auto px-4 sm:px-6">
         <div className="mb-6 sm:mb-8">
-            <Link href="/questionnaire" className="inline-flex items-center text-white/50 hover:text-white transition-colors mb-3 sm:mb-4 text-sm sm:text-base">
-                <ArrowLeft className="w-4 h-4 mr-2" /> Back to requirements
+            <Link href="/tools/floor-plan-generator" className="inline-flex items-center text-gray-600 hover:text-foreground transition-colors mb-3 sm:mb-4 text-sm sm:text-base">
+                <ArrowLeft className="w-4 h-4 mr-2" /> Back to Floor Plan Generator
             </Link>
             <motion.h1 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tighter text-white"
+                className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tighter text-foreground"
             >
                 Your Recommended Plan
             </motion.h1>
@@ -132,8 +132,8 @@ export default function FloorPlanPage() {
              <TabsRoot defaultValue="2d" className="w-full">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-3 sm:gap-4">
                    <div>
-                       <h2 className="text-xl sm:text-2xl font-bold text-white">{activePlan?.title}</h2>
-                       <p className="text-white/50 text-sm sm:text-base">{activePlan?.description}</p>
+                       <h2 className="text-xl sm:text-2xl font-bold text-foreground">{activePlan?.title}</h2>
+                       <p className="text-gray-600 text-sm sm:text-base">{activePlan?.description}</p>
                    </div>
                    <TabsListImpl className="w-full sm:w-auto">
                       <TabsTriggerImpl value="2d" className="flex-1 sm:flex-none px-4 sm:px-6 text-xs sm:text-sm">2D Blueprint</TabsTriggerImpl>
@@ -145,7 +145,7 @@ export default function FloorPlanPage() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 }}
-                className="border border-white/10 bg-neutral-900/50 p-1 backdrop-blur-xl shadow-2xl h-[400px] sm:h-[500px] md:h-[600px]"
+                className="border border-gray-200 bg-white p-1 backdrop-blur-xl shadow-2xl h-[400px] sm:h-[500px] md:h-[600px]"
               >
                   <TabsContentImpl value="2d" className="mt-0 h-full">
                       {generatedPlan ? (
@@ -170,48 +170,81 @@ export default function FloorPlanPage() {
             transition={{ delay: 0.4 }}
             className="space-y-6 sm:space-y-8 order-1 lg:order-2"
           >
-            <Card className="border border-white/10 bg-white/5 backdrop-blur-md">
-              <CardHeader className="border-b border-white/5">
-                <CardTitle className="text-white">Specifications</CardTitle>
+            <Card className="border border-gray-200 bg-white backdrop-blur-md">
+              <CardHeader className="border-b border-gray-200">
+                <CardTitle className="text-foreground">Specifications</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6 pt-6">
                   <div className="flex justify-between items-center">
-                      <span className="text-white/50">Plot Dimensions</span>
-                      <span className="font-mono text-white font-bold">{activePlan?.plotSize}</span>
+                      <span className="text-gray-600">Plot Dimensions</span>
+                      <span className="font-mono text-foreground font-bold">{activePlan?.plotSize}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                      <span className="text-white/50">Orientation</span>
-                      <span className="font-mono text-white font-bold">{Array.isArray(activePlan?.facing) ? activePlan?.facing.join(", ") : activePlan?.facing}</span>
+                      <span className="text-gray-600">Orientation</span>
+                      <span className="font-mono text-foreground font-bold">{Array.isArray(activePlan?.facing) ? activePlan?.facing.join(", ") : activePlan?.facing}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                      <span className="text-white/50">Structure</span>
-                      <span className="font-mono text-white font-bold">{activePlan?.floors} Floors</span>
+                      <span className="text-gray-600">Structure</span>
+                      <span className="font-mono text-foreground font-bold">{activePlan?.floors} Floors</span>
                   </div>
                    <div className="flex justify-between items-center">
-                      <span className="text-white/50">Configuration</span>
-                      <span className="font-mono text-white font-bold">{activePlan?.bedrooms} BHK</span>
+                      <span className="text-gray-600">Configuration</span>
+                      <span className="font-mono text-foreground font-bold">{activePlan?.bedrooms} BHK</span>
                   </div>
                    <div className="flex justify-between items-center">
-                      <span className="text-white/50">Vastu Score</span>
-                      <span className="inline-flex items-center text-green-400 font-bold bg-green-400/10 px-2 py-1 text-xs rounded">
+                      <span className="text-gray-600">Vastu Score</span>
+                      <span className="inline-flex items-center text-green-600 font-bold bg-green-100 px-2 py-1 text-xs rounded">
                           {activePlan?.vastu ? "100% Compliant" : "Standard"}
                       </span>
                   </div>
               </CardContent>
             </Card>
 
-            <div className="space-y-4">
-               <Link href={`/contact?templateId=${activePlan?.id}`} className="block">
-                  <Button className="w-full h-16 text-lg font-bold bg-primary hover:bg-white hover:text-black transition-all shadow-[0_0_30px_rgba(255,77,0,0.3)] rounded-none">
-                      <Phone className="mr-2 h-5 w-5" /> Start Construction
+            {/* Service Promotion CTA */}
+            <Card className="border-2 border-primary bg-gradient-to-br from-primary/5 to-orange-50 mb-6">
+              <CardHeader>
+                <CardTitle className="text-lg">Ready to Build?</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-gray-700">
+                  Love your floor plan? Let's turn it into reality. Our turnkey construction service handles everything.
+                </p>
+                <div className="space-y-2 text-xs text-gray-600">
+                  <div className="flex items-start gap-2">
+                    <span className="text-primary">✓</span>
+                    <span>Verified builders & contractors</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-primary">✓</span>
+                    <span>Fixed pricing, no surprises</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-primary">✓</span>
+                    <span>40% faster completion</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-primary">✓</span>
+                    <span>Free Pro subscription included</span>
+                  </div>
+                </div>
+                <Link href={`/contact?templateId=${activePlan?.id}&service=turnkey-construction`}>
+                  <Button className="w-full bg-primary text-white hover:bg-primary/90 font-bold">
+                    <Phone className="mr-2 h-5 w-5" /> Get Construction Quote
                   </Button>
-               </Link>
-               <Button variant="outline" className="w-full h-14 border-white/10 text-white hover:bg-white/10 rounded-none">
+                </Link>
+                <Link href="/services/turnkey-construction" className="block text-center text-sm text-primary hover:underline">
+                  Learn more about services
+                </Link>
+              </CardContent>
+            </Card>
+
+            <div className="space-y-4">
+               <Button variant="outline" className="w-full h-14 border-gray-300 text-foreground hover:bg-gray-50 rounded-none">
                    <Download className="mr-2 h-5 w-5" /> Download BOQ & Plan
                </Button>
             </div>
             
-            <p className="text-xs text-center text-white/30">
+            <p className="text-xs text-center text-gray-500 mt-4">
                 By proceeding, you agree to our construction terms and protocols.
             </p>
           </motion.div>

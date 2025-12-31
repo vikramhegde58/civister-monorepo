@@ -203,13 +203,13 @@ export default function Hero3D() {
               toneMapping: THREE.ACESFilmicToneMapping,
               powerPreference: isMobile ? "low-power" : "high-performance"
           }} 
-          camera={{ position: [12, 6, 15], fov: isMobile ? 30 : 25 }}
+          camera={{ position: [7, 3, 8], fov: isMobile ? 22 : 18 }}
           style={{ pointerEvents: 'auto' }}
       >
-        <Suspense fallback={<Html center><div className="text-white/50 text-sm font-mono">Loading 3D Experience...</div></Html>}>
+        <Suspense fallback={<Html center><div className="text-gray-500 text-sm font-mono">Loading 3D Experience...</div></Html>}>
             
             {/* Matching Fog to blend ground plane edges */}
-            <fog attach="fog" args={['#0b0e14', 15, 40]} />
+            <fog attach="fog" args={['#f5f5f5', 15, 40]} />
 
             {/* Lighting */}
             <ambientLight intensity={0.3} />
@@ -237,13 +237,13 @@ export default function Hero3D() {
         
         {/* Controls - Outside Suspense so they work immediately */}
         <OrbitControls 
-            enableZoom={!isMobile} 
+            enableZoom={false} 
             enablePan={false} 
             autoRotate 
             autoRotateSpeed={isMobile ? 0.3 : 0.5}
-            minPolarAngle={Math.PI / 3}
-            maxPolarAngle={Math.PI / 2}
-            minDistance={8}
+            minPolarAngle={Math.PI / 2.5}
+            maxPolarAngle={Math.PI / 2.5}
+            minDistance={5}
             maxDistance={25}
             enableDamping
             dampingFactor={0.05}

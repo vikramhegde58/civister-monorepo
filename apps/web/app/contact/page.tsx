@@ -64,7 +64,7 @@ function ContactForm() {
         animate={{ opacity: 1, scale: 1 }}
         className="w-full max-w-md mx-auto"
       >
-        <Card className="border border-white/10 bg-neutral-900/50 backdrop-blur-md shadow-2xl text-white">
+        <Card className="border border-gray-200 bg-white backdrop-blur-md shadow-2xl">
           <CardContent className="pt-12 pb-12 text-center space-y-6">
             <div className="flex justify-center">
                 <div className="h-20 w-20 rounded-full bg-green-500/20 flex items-center justify-center">
@@ -72,12 +72,12 @@ function ContactForm() {
                 </div>
             </div>
             <h2 className="text-3xl font-bold tracking-tight">Request Received</h2>
-            <p className="text-white/60 text-lg">
+            <p className="text-gray-600 text-lg">
               We have received your project details. A Civister construction expert will contact you within 24 hours.
             </p>
             <Button 
                 onClick={() => (window.location.href = "/")} 
-                className="w-full bg-primary hover:bg-white hover:text-black font-bold"
+                className="w-full bg-primary hover:bg-primary/90 text-white font-bold"
             >
                 Back to Home
             </Button>
@@ -93,10 +93,10 @@ function ContactForm() {
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-lg mx-auto"
     >
-        <Card className="border border-white/10 bg-neutral-900/50 backdrop-blur-md shadow-2xl text-white">
-          <CardHeader className="border-b border-white/5 pb-4 sm:pb-6 px-4 sm:px-6 pt-4 sm:pt-6">
+        <Card className="border border-gray-200 bg-white backdrop-blur-md shadow-2xl">
+          <CardHeader className="border-b border-gray-200 pb-4 sm:pb-6 px-4 sm:px-6 pt-4 sm:pt-6">
             <CardTitle className="text-xl sm:text-2xl">Initialize Project</CardTitle>
-            <CardDescription className="text-white/50 text-sm sm:text-base">
+            <CardDescription className="text-gray-600 text-sm sm:text-base">
                 {templateId 
                     ? "Let's discuss building your selected floor plan." 
                     : "Tell us about your construction needs."}
@@ -105,32 +105,32 @@ function ContactForm() {
           <CardContent className="pt-6 sm:pt-8 px-4 sm:px-6 pb-4 sm:pb-6">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="name" className="text-white/80">Full Name</Label>
-                <Input id="name" {...register("name")} placeholder="John Doe" className="bg-white/5 border-white/10 text-white placeholder:text-white/20 focus:border-primary" />
+                <Label htmlFor="name" className="text-foreground">Full Name</Label>
+                <Input id="name" {...register("name")} placeholder="John Doe" className="bg-gray-50 border-gray-300 focus:border-primary" />
                 {errors.name && <p className="text-sm text-destructive">{errors.name.message}</p>}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-white/80">Email Address</Label>
-                <Input id="email" type="email" {...register("email")} placeholder="john@example.com" className="bg-white/5 border-white/10 text-white placeholder:text-white/20 focus:border-primary" />
+                <Label htmlFor="email" className="text-foreground">Email Address</Label>
+                <Input id="email" type="email" {...register("email")} placeholder="john@example.com" className="bg-gray-50 border-gray-300 focus:border-primary" />
                 {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="phone" className="text-white/80">Phone Number</Label>
-                <Input id="phone" type="tel" {...register("phone")} placeholder="1234567890" className="bg-white/5 border-white/10 text-white placeholder:text-white/20 focus:border-primary" />
+                <Label htmlFor="phone" className="text-foreground">Phone Number</Label>
+                <Input id="phone" type="tel" {...register("phone")} placeholder="1234567890" className="bg-gray-50 border-gray-300 focus:border-primary" />
                 {errors.phone && <p className="text-sm text-destructive">{errors.phone.message}</p>}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="requirements" className="text-white/80">Additional Requirements</Label>
+                <Label htmlFor="requirements" className="text-foreground">Additional Requirements</Label>
                 <Textarea 
                     id="requirements" 
                     {...register("requirements")} 
                     placeholder="Any specific modifications or questions?" 
-                    className="min-h-[100px] bg-white/5 border-white/10 text-white placeholder:text-white/20 focus:border-primary"
+                    className="min-h-[100px] bg-gray-50 border-gray-300 focus:border-primary"
                 />
               </div>
               <input type="hidden" {...register("templateId")} />
               
-              <Button type="submit" className="w-full h-12 text-lg font-bold bg-primary hover:bg-white hover:text-black transition-all" disabled={isSubmitting}>
+              <Button type="submit" className="w-full h-12 text-lg font-bold bg-primary hover:bg-primary/90 text-white transition-all" disabled={isSubmitting}>
                 {isSubmitting ? "Submitting..." : "Submit Request"}
               </Button>
             </form>
@@ -150,7 +150,7 @@ export default function ContactPage() {
                 }} 
             />
             <div className="container relative z-10 px-4 sm:px-6">
-                <Suspense fallback={<div className="text-white text-center">Loading...</div>}>
+                <Suspense fallback={<div className="text-foreground text-center">Loading...</div>}>
                     <ContactForm />
                 </Suspense>
             </div>

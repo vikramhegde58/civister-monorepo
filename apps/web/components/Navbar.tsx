@@ -2,14 +2,17 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { HardHat, Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { Logo } from "./Logo";
 
-export default function Navbar() {
+function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [toolsOpen, setToolsOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,8 +38,8 @@ export default function Navbar() {
     <>
       <motion.header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out py-4 px-4 md:px-8",
-          scrolled ? "py-2" : "py-6"
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out py-2 px-4 md:px-8",
+          scrolled ? "py-2" : "py-2"
         )}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -44,45 +47,114 @@ export default function Navbar() {
       >
         <div
           className={cn(
-            "mx-auto max-w-7xl rounded-full border transition-all duration-300 flex items-center justify-between px-4 sm:px-6 py-3",
+            "mx-auto md:max-w-8xl max-w-9xl rounded-full border transition-all duration-300 flex items-center justify-between px-4 sm:px-6",
             scrolled
-              ? "bg-black/40 backdrop-blur-xl border-white/10 shadow-lg"
+              ? "bg-white/40 backdrop-blur-xl border-gray-100 shadow-lg"
               : "bg-transparent border-transparent"
           )}
         >
-          <Link href="/" className="flex items-center gap-2 group">
-             <div className="relative flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-primary/10 overflow-hidden group-hover:bg-primary/20 transition-colors">
-                <HardHat className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />
-             </div>
-             <span className="font-bold text-base sm:text-lg tracking-tight text-white">Civister.</span>
-          </Link>
+          <Logo />
 
-          <nav className="hidden md:flex items-center gap-8">
-            {["Expertise", "Process", "Projects"].map((item) => (
-              <Link
-                key={item}
-                href={`/#${item.toLowerCase()}`}
-                className="text-sm font-medium text-white/60 hover:text-white transition-colors"
-              >
-                {item}
-              </Link>
-            ))}
+          <nav className="hidden md:flex items-center gap-6">
+            {/* Tools Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setToolsOpen(true)}
+              onMouseLeave={() => setToolsOpen(false)}
+            >
+              <button className="text-sm font-medium text-gray-600 hover:text-foreground transition-colors flex items-center gap-1">
+                Tools
+                <ChevronDown className={cn("w-4 h-4 transition-transform", toolsOpen && "rotate-180")} />
+              </button>
+              <AnimatePresence>
+                {toolsOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50"
+                  >
+                    <Link href="/tools/floor-plan-generator" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors">
+                      Floor Plan Generator
+                    </Link>
+                    <Link href="/tools/2d-to-3d-converter" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors">
+                      2D to 3D Converter <span className="text-xs text-gray-400 ml-2">Coming Soon</span>
+                    </Link>
+                    <Link href="/tools/interior-generator" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors">
+                      Interior Generator <span className="text-xs text-gray-400 ml-2">Coming Soon</span>
+                    </Link>
+                    <div className="border-t border-gray-200 mt-2 pt-2">
+                      <Link href="/tools" className="block px-4 py-2 text-sm font-medium text-primary hover:bg-gray-50 transition-colors">
+                        View All Tools
+                      </Link>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Services Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setServicesOpen(true)}
+              onMouseLeave={() => setServicesOpen(false)}
+            >
+              <button className="text-sm font-medium text-gray-600 hover:text-foreground transition-colors flex items-center gap-1">
+                Services
+                <ChevronDown className={cn("w-4 h-4 transition-transform", servicesOpen && "rotate-180")} />
+              </button>
+              <AnimatePresence>
+                {servicesOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50"
+                  >
+                    <Link href="/services/turnkey-construction" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors">
+                      Whole House Construction
+                    </Link>
+                    <Link href="/services/interior-execution" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors">
+                      Interior Execution
+                    </Link>
+                    <Link href="/services/house-upgrade" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors">
+                      House Upgrade & Renovation
+                    </Link>
+                    <div className="border-t border-gray-200 mt-2 pt-2">
+                      <Link href="/services" className="block px-4 py-2 text-sm font-medium text-primary hover:bg-gray-50 transition-colors">
+                        View All Services
+                      </Link>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            <Link href="/pricing" className="text-sm font-medium text-gray-600 hover:text-foreground transition-colors">
+              Pricing
+            </Link>
+            <Link href="/about" className="text-sm font-medium text-gray-600 hover:text-foreground transition-colors">
+              About
+            </Link>
+            <Link href="/contact" className="text-sm font-medium text-gray-600 hover:text-foreground transition-colors">
+              Contact
+            </Link>
           </nav>
 
           <div className="flex items-center gap-3 sm:gap-4">
-            <Link href="/questionnaire" className="hidden sm:block">
+            <Link href="/services/turnkey-construction" className="hidden sm:block">
               <Button 
                   size="sm" 
-                  className="rounded-full bg-white text-black hover:bg-white/90 font-medium px-4 sm:px-6 text-sm sm:text-base"
+                  className="rounded-full bg-primary text-white hover:bg-primary/90 font-medium px-4 sm:px-6 text-sm sm:text-base"
               >
-                Start Project
+                Get Started
               </Button>
             </Link>
             
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-white/60 hover:text-white transition-colors"
+              className="md:hidden p-2 text-gray-600 hover:text-foreground transition-colors"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -98,7 +170,7 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 md:hidden bg-black/95 backdrop-blur-xl"
+            className="fixed inset-0 z-40 md:hidden bg-white/95 backdrop-blur-xl"
             onClick={() => setMobileMenuOpen(false)}
           >
             <motion.nav
@@ -106,22 +178,57 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="absolute top-20 right-4 left-4 bg-neutral-900/95 backdrop-blur-xl rounded-2xl border border-white/10 p-6 space-y-4"
+              className="absolute top-20 right-4 left-4 bg-white backdrop-blur-xl rounded-2xl border border-gray-200 p-6 space-y-4 shadow-lg max-h-[80vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              {["Expertise", "Process", "Projects"].map((item) => (
-                <Link
-                  key={item}
-                  href={`/#${item.toLowerCase()}`}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block text-lg font-medium text-white/80 hover:text-white transition-colors py-2"
-                >
-                  {item}
+              {/* Tools Section */}
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Tools</span>
+                </div>
+                <Link href="/tools/floor-plan-generator" onClick={() => setMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 hover:text-primary transition-colors py-2">
+                  Floor Plan Generator
                 </Link>
-              ))}
-              <Link href="/questionnaire" onClick={() => setMobileMenuOpen(false)}>
+                <Link href="/tools/2d-to-3d-converter" onClick={() => setMobileMenuOpen(false)} className="block text-lg font-medium text-gray-400 transition-colors py-2">
+                  2D to 3D Converter <span className="text-xs ml-2">Coming Soon</span>
+                </Link>
+                <Link href="/tools/interior-generator" onClick={() => setMobileMenuOpen(false)} className="block text-lg font-medium text-gray-400 transition-colors py-2">
+                  Interior Generator <span className="text-xs ml-2">Coming Soon</span>
+                </Link>
+              </div>
+
+              {/* Services Section */}
+              <div className="pt-4 border-t border-gray-200">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Services</span>
+                </div>
+                <Link href="/services/turnkey-construction" onClick={() => setMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 hover:text-primary transition-colors py-2">
+                  Whole House Construction
+                </Link>
+                <Link href="/services/interior-execution" onClick={() => setMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 hover:text-primary transition-colors py-2">
+                  Interior Execution
+                </Link>
+                <Link href="/services/house-upgrade" onClick={() => setMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 hover:text-primary transition-colors py-2">
+                  House Upgrade & Renovation
+                </Link>
+              </div>
+
+              {/* Other Links */}
+              <div className="pt-4 border-t border-gray-200">
+                <Link href="/pricing" onClick={() => setMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 hover:text-primary transition-colors py-2">
+                  Pricing
+                </Link>
+                <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 hover:text-primary transition-colors py-2">
+                  About
+                </Link>
+                <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 hover:text-primary transition-colors py-2">
+                  Contact
+                </Link>
+              </div>
+
+              <Link href="/services/turnkey-construction" onClick={() => setMobileMenuOpen(false)}>
                 <Button className="w-full mt-4 h-12 bg-primary text-white hover:bg-primary/90 font-medium">
-                  Start Project
+                  Get Started
                 </Button>
               </Link>
             </motion.nav>
@@ -131,3 +238,5 @@ export default function Navbar() {
     </>
   );
 }
+
+export default Navbar;

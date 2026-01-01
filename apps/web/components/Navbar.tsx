@@ -13,6 +13,7 @@ function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [pricingOpen, setPricingOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -74,6 +75,9 @@ function Navbar() {
                     exit={{ opacity: 0, y: -10 }}
                     className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50"
                   >
+                    <Link href="/tools" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors">
+                      Overview
+                    </Link>
                     <Link href="/tools/floor-plan-generator" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors">
                       Floor Plan Generator
                     </Link>
@@ -83,11 +87,6 @@ function Navbar() {
                     <Link href="/tools/interior-generator" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors">
                       Interior Generator <span className="text-xs text-gray-400 ml-2">Coming Soon</span>
                     </Link>
-                    <div className="border-t border-gray-200 mt-2 pt-2">
-                      <Link href="/tools" className="block px-4 py-2 text-sm font-medium text-primary hover:bg-gray-50 transition-colors">
-                        View All Tools
-                      </Link>
-                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -111,6 +110,9 @@ function Navbar() {
                     exit={{ opacity: 0, y: -10 }}
                     className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50"
                   >
+                    <Link href="/services" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors">
+                      Overview
+                    </Link>
                     <Link href="/services/turnkey-construction" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors">
                       Whole House Construction
                     </Link>
@@ -120,19 +122,47 @@ function Navbar() {
                     <Link href="/services/house-upgrade" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors">
                       House Upgrade & Renovation
                     </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Pricing Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setPricingOpen(true)}
+              onMouseLeave={() => setPricingOpen(false)}
+            >
+              <button className="text-sm font-medium text-gray-600 hover:text-foreground transition-colors flex items-center gap-1">
+                Pricing
+                <ChevronDown className={cn("w-4 h-4 transition-transform", pricingOpen && "rotate-180")} />
+              </button>
+              <AnimatePresence>
+                {pricingOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50"
+                  >
+                    <Link href="/pricing" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors">
+                      Overview
+                    </Link>
+                    <Link href="/pricing/tools" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors">
+                      Tool Pricing
+                    </Link>
+                    <Link href="/pricing/services" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors">
+                      Service Pricing
+                    </Link>
                     <div className="border-t border-gray-200 mt-2 pt-2">
-                      <Link href="/services" className="block px-4 py-2 text-sm font-medium text-primary hover:bg-gray-50 transition-colors">
-                        View All Services
+                      <Link href="/contact" className="block px-4 py-2 text-sm font-medium text-primary hover:bg-gray-50 transition-colors">
+                        Get Free Quote
                       </Link>
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
-
-            <Link href="/pricing" className="text-sm font-medium text-gray-600 hover:text-foreground transition-colors">
-              Pricing
-            </Link>
             <Link href="/about" className="text-sm font-medium text-gray-600 hover:text-foreground transition-colors">
               About
             </Link>
@@ -186,6 +216,9 @@ function Navbar() {
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Tools</span>
                 </div>
+                <Link href="/tools" onClick={() => setMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 hover:text-primary transition-colors py-2">
+                  Overview
+                </Link>
                 <Link href="/tools/floor-plan-generator" onClick={() => setMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 hover:text-primary transition-colors py-2">
                   Floor Plan Generator
                 </Link>
@@ -202,6 +235,9 @@ function Navbar() {
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Services</span>
                 </div>
+                <Link href="/services" onClick={() => setMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 hover:text-primary transition-colors py-2">
+                  Overview
+                </Link>
                 <Link href="/services/turnkey-construction" onClick={() => setMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 hover:text-primary transition-colors py-2">
                   Whole House Construction
                 </Link>
@@ -213,11 +249,24 @@ function Navbar() {
                 </Link>
               </div>
 
+              {/* Pricing Section */}
+              <div className="pt-4 border-t border-gray-200">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-semibold text-gray-500 uppercase tracking-wider">Pricing</span>
+                </div>
+                <Link href="/pricing" onClick={() => setMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 hover:text-primary transition-colors py-2">
+                  Overview
+                </Link>
+                <Link href="/pricing/tools" onClick={() => setMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 hover:text-primary transition-colors py-2">
+                  Tool Pricing
+                </Link>
+                <Link href="/pricing/services" onClick={() => setMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 hover:text-primary transition-colors py-2">
+                  Service Pricing
+                </Link>
+              </div>
+
               {/* Other Links */}
               <div className="pt-4 border-t border-gray-200">
-                <Link href="/pricing" onClick={() => setMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 hover:text-primary transition-colors py-2">
-                  Pricing
-                </Link>
                 <Link href="/about" onClick={() => setMobileMenuOpen(false)} className="block text-lg font-medium text-gray-700 hover:text-primary transition-colors py-2">
                   About
                 </Link>
